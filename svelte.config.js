@@ -14,6 +14,14 @@ const config = {
 		adapter: adapter({
 			runtime: 'nodejs20.x'
 		})
+	},
+
+	vitePlugin: {
+		inspector: {
+			holdMode: true,
+			showToggleButton: 'always',
+			toggleButtonPos: 'bottom-right'
+		}
 	}
 };
 

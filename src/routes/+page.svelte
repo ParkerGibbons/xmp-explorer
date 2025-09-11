@@ -19,6 +19,11 @@
 		Separator,
 		Textarea,
 		Tooltip,
+		Select,
+		SelectContent,
+		SelectItem,
+		SelectTrigger,
+		SelectValue,
 	} from '$lib/components/ui';
 	import {
 		exportToCSV,
@@ -33,29 +38,30 @@
 		Download,
 		FileText,
 		Filter,
-		Import,
 		Search,
 		Settings,
 		Table,
-		Upload,
 		X,
+		ChevronDown,
+		Import,
 	} from 'lucide-svelte';
 
 	let rdfText = $state('');
 	let fileInput: HTMLInputElement;
+	let downloadDropdownOpen = $state(false);
 
 	const columns: Column[] = [
-		{ key: 'qname', title: 'QName', width: 200, sortable: true },
-		{ key: 'prefix', title: 'Prefix', width: 90 },
-		{ key: 'namespaceURI', title: 'Namespace', width: 320 },
-		{ key: 'category', title: 'Category', width: 120, sortable: true },
-		{ key: 'valueType', title: 'Value Type', width: 200 },
-		{ key: 'valueForm', title: 'Value Form', width: 120 },
-		{ key: 'description', title: 'Description', width: 420 },
-		{ key: 'mediaTags', title: 'Media', width: 150 },
-		{ key: 'structFields', title: 'Struct Fields', width: 300 },
-		{ key: 'mapSequence', title: 'Map → Sequence', width: 220 },
-		{ key: 'notes', title: 'Notes', width: 220 },
+		{ key: 'qname', title: 'QName', width: 120, sortable: true },
+		{ key: 'description', title: 'Description', width: 600 },
+		{ key: 'prefix', title: 'Prefix', width: 80 },
+		{ key: 'namespaceURI', title: 'Namespace', width: 280 },
+		{ key: 'category', title: 'Category', width: 140, sortable: true },
+		{ key: 'valueType', title: 'Value Type', width: 180 },
+		{ key: 'valueForm', title: 'Value Form', width: 140 },
+		{ key: 'mediaTags', title: 'Media', width: 180 },
+		{ key: 'structFields', title: 'Struct Fields', width: 280 },
+		{ key: 'mapSequence', title: 'Map → Sequence', width: 200 },
+		{ key: 'notes', title: 'Notes', width: 200 },
 	];
 
 	onMount(() => {
@@ -105,9 +111,19 @@
 			// Show success message
 		}
 	}
+
+	function handleClickOutside(event: MouseEvent) {
+		const target = event.target as HTMLElement;
+		if (!target.closest('.download-dropdown')) {
+			downloadDropdownOpen = false;
+		}
+	}
 </script>
 
-<div class="min-h-screen bg-background text-foreground">
+<div
+	class="min-h-screen bg-background text-foreground"
+	onclick={handleClickOutside}
+>
 	<!-- Header Section -->
 	<div class="border-b bg-card">
 		<div class="container mx-auto px-6 py-4">
@@ -123,51 +139,67 @@
 								Explore and manage XMP properties with advanced
 								filtering
 							</p>
+							<p class="text-xs text-muted-foreground/80">
+								created by <a
+									href="https://www.parker.mov"
+									target="_blank"
+									rel="noopener noreferrer"
+									class="text-primary hover:underline font-medium"
+									>parker.mov</a
+								>
+								• based on the
+								<a
+									href="https://developer.adobe.com/xmp/docs/"
+									target="_blank"
+									rel="noopener noreferrer"
+									class="text-primary hover:underline font-medium"
+									>Adobe XMP Specification</a
+								>
+							</p>
 						</div>
 					</div>
 				</div>
 				<div class="flex items-center space-x-2">
-					<Tooltip content="Export to CSV">
+					<div class="relative download-dropdown">
 						<Button
 							variant="outline"
 							size="sm"
-							onclick={handleExportCSV}
+							onclick={() =>
+								(downloadDropdownOpen = !downloadDropdownOpen)}
 						>
 							<Download class="h-4 w-4 mr-2" />
-							CSV
+							Download
+							<ChevronDown class="h-4 w-4 ml-2" />
 						</Button>
-					</Tooltip>
-					<Tooltip content="Export to JSON">
-						<Button
-							variant="outline"
-							size="sm"
-							onclick={handleExportJSON}
-						>
-							<FileText class="h-4 w-4 mr-2" />
-							JSON
-						</Button>
-					</Tooltip>
-					<input
-						bind:this={fileInput}
-						type="file"
-						accept="application/json"
-						class="hidden"
-						onchange={handleImportJSON}
-					/>
-					<Tooltip content="Import JSON file">
-						<Button
-							variant="outline"
-							size="sm"
-							onclick={() => fileInput.click()}
-						>
-							<Upload class="h-4 w-4 mr-2" />
-							Import
-						</Button>
-					</Tooltip>
-					<Separator
-						orientation="vertical"
-						class="h-6"
-					/>
+						{#if downloadDropdownOpen}
+							<div
+								class="absolute right-0 mt-2 w-40 bg-popover border rounded-md shadow-lg z-50"
+							>
+								<div class="py-1">
+									<button
+										class="w-full text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground flex items-center"
+										onclick={() => {
+											handleExportCSV();
+											downloadDropdownOpen = false;
+										}}
+									>
+										<FileText class="h-4 w-4 mr-2" />
+										Export CSV
+									</button>
+									<button
+										class="w-full text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground flex items-center"
+										onclick={() => {
+											handleExportJSON();
+											downloadDropdownOpen = false;
+										}}
+									>
+										<Download class="h-4 w-4 mr-2" />
+										Export JSON
+									</button>
+								</div>
+							</div>
+						{/if}
+					</div>
 					<ThemeToggle />
 				</div>
 			</div>
@@ -175,147 +207,165 @@
 	</div>
 
 	<!-- Main Content -->
-	<div class="container mx-auto p-6 space-y-6">
-		<!-- Stats Cards -->
-		<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-			<Card>
-				<CardContent class="p-6">
-					<div class="flex items-center space-x-2">
-						<Table class="h-4 w-4 text-muted-foreground" />
-						<div>
-							<p
-								class="text-sm font-medium text-muted-foreground"
+	<div class="container mx-auto p-6">
+		<!-- Desktop: Sidebar + Table Layout | Mobile: Vertical Stack -->
+		<div class="lg:grid lg:grid-cols-12 lg:gap-8 space-y-6 lg:space-y-0">
+			<!-- Sidebar: Stats + Search (Desktop) | Stacked (Mobile) -->
+			<div class="lg:col-span-4 xl:col-span-3 space-y-6">
+				<!-- Stats Cards -->
+				<div class="grid grid-cols-2 lg:grid-cols-1 gap-4">
+					<Card>
+						<CardContent class="p-4 lg:p-6">
+							<div class="flex items-center space-x-2">
+								<Table class="h-4 w-4 text-muted-foreground" />
+								<div>
+									<p
+										class="text-xs lg:text-sm font-medium text-muted-foreground"
+									>
+										Total Properties
+									</p>
+									<p class="text-lg lg:text-2xl font-bold">
+										{$xmpStore.properties.length}
+									</p>
+								</div>
+							</div>
+						</CardContent>
+					</Card>
+					<Card>
+						<CardContent class="p-4 lg:p-6">
+							<div class="flex items-center space-x-2">
+								<Filter class="h-4 w-4 text-muted-foreground" />
+								<div>
+									<p
+										class="text-xs lg:text-sm font-medium text-muted-foreground"
+									>
+										Filtered Results
+									</p>
+									<p class="text-lg lg:text-2xl font-bold">
+										{$filteredProperties.length}
+									</p>
+								</div>
+							</div>
+						</CardContent>
+					</Card>
+					<Card>
+						<CardContent class="p-4 lg:p-6">
+							<div class="flex items-center space-x-2">
+								<Database
+									class="h-4 w-4 text-muted-foreground"
+								/>
+								<div>
+									<p
+										class="text-xs lg:text-sm font-medium text-muted-foreground"
+									>
+										Namespaces
+									</p>
+									<p class="text-lg lg:text-2xl font-bold">
+										{new Set(
+											$xmpStore.properties.map(
+												(p) => p.prefix
+											)
+										).size}
+									</p>
+								</div>
+							</div>
+						</CardContent>
+					</Card>
+					<Card>
+						<CardContent class="p-4 lg:p-6">
+							<div class="flex items-center space-x-2">
+								<Settings
+									class="h-4 w-4 text-muted-foreground"
+								/>
+								<div>
+									<p
+										class="text-xs lg:text-sm font-medium text-muted-foreground"
+									>
+										Categories
+									</p>
+									<p class="text-lg lg:text-2xl font-bold">
+										{new Set(
+											$xmpStore.properties.map(
+												(p) => p.category
+											)
+										).size}
+									</p>
+								</div>
+							</div>
+						</CardContent>
+					</Card>
+				</div>
+
+				<!-- Filters Section -->
+				<Card>
+					<CardHeader class="pb-3">
+						<div class="flex items-center space-x-2">
+							<Search class="h-4 w-4" />
+							<CardTitle class="text-base"
+								>Search & Filters</CardTitle
 							>
-								Total Properties
-							</p>
-							<p class="text-2xl font-bold">
-								{$xmpStore.properties.length}
-							</p>
 						</div>
-					</div>
-				</CardContent>
-			</Card>
-			<Card>
-				<CardContent class="p-6">
-					<div class="flex items-center space-x-2">
-						<Filter class="h-4 w-4 text-muted-foreground" />
-						<div>
-							<p
-								class="text-sm font-medium text-muted-foreground"
-							>
-								Filtered Results
-							</p>
-							<p class="text-2xl font-bold">
-								{$filteredProperties.length}
-							</p>
+						<CardDescription class="text-xs">
+							Filter properties by category, type, and more
+						</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<PropertyFilters />
+					</CardContent>
+				</Card>
+			</div>
+
+			<!-- Main Table Area -->
+			<div class="lg:col-span-8 xl:col-span-9">
+				<Card>
+					<CardHeader>
+						<div class="flex items-center justify-between">
+							<div class="flex items-center space-x-2">
+								<Table class="h-5 w-5" />
+								<CardTitle>Properties</CardTitle>
+								<Badge variant="secondary"
+									>{$filteredProperties.length} results</Badge
+								>
+							</div>
+							<div class="flex items-center space-x-2">
+								{#if $xmpStore.searchQuery || $xmpStore.filters.namespace !== 'all' || $xmpStore.filters.category !== 'all' || $xmpStore.filters.valueForm !== 'all' || $xmpStore.filters.media !== 'any'}
+									<Button
+										variant="ghost"
+										size="sm"
+										onclick={() => {
+											xmpStore.update((store) => ({
+												...store,
+												searchQuery: '',
+												filters: {
+													namespace: 'all',
+													category: 'all',
+													valueForm: 'all',
+													media: 'any',
+												},
+											}));
+										}}
+									>
+										<X class="h-4 w-4 mr-2" />
+										Clear Filters
+									</Button>
+								{/if}
+							</div>
 						</div>
-					</div>
-				</CardContent>
-			</Card>
-			<Card>
-				<CardContent class="p-6">
-					<div class="flex items-center space-x-2">
-						<Database class="h-4 w-4 text-muted-foreground" />
-						<div>
-							<p
-								class="text-sm font-medium text-muted-foreground"
-							>
-								Namespaces
-							</p>
-							<p class="text-2xl font-bold">
-								{new Set(
-									$xmpStore.properties.map((p) => p.prefix)
-								).size}
-							</p>
+					</CardHeader>
+					<CardContent>
+						<div class="h-[600px] lg:h-[700px] overflow-auto">
+							<DataTable
+								{columns}
+								data={$filteredProperties}
+							/>
 						</div>
-					</div>
-				</CardContent>
-			</Card>
-			<Card>
-				<CardContent class="p-6">
-					<div class="flex items-center space-x-2">
-						<Settings class="h-4 w-4 text-muted-foreground" />
-						<div>
-							<p
-								class="text-sm font-medium text-muted-foreground"
-							>
-								Categories
-							</p>
-							<p class="text-2xl font-bold">
-								{new Set(
-									$xmpStore.properties.map((p) => p.category)
-								).size}
-							</p>
-						</div>
-					</div>
-				</CardContent>
-			</Card>
+					</CardContent>
+				</Card>
+			</div>
 		</div>
 
-		<!-- Filters Section -->
-		<Card>
-			<CardHeader>
-				<div class="flex items-center space-x-2">
-					<Search class="h-5 w-5" />
-					<CardTitle>Search & Filters</CardTitle>
-				</div>
-				<CardDescription>
-					Use the filters below to narrow down your search results
-				</CardDescription>
-			</CardHeader>
-			<CardContent>
-				<PropertyFilters />
-			</CardContent>
-		</Card>
-
-		<!-- Data Table Section -->
-		<Card>
-			<CardHeader>
-				<div class="flex items-center justify-between">
-					<div class="flex items-center space-x-2">
-						<Table class="h-5 w-5" />
-						<CardTitle>Properties</CardTitle>
-						<Badge variant="secondary"
-							>{$filteredProperties.length} results</Badge
-						>
-					</div>
-					<div class="flex items-center space-x-2">
-						{#if $xmpStore.searchQuery || $xmpStore.filters.namespace !== 'all' || $xmpStore.filters.category !== 'all' || $xmpStore.filters.valueForm !== 'all' || $xmpStore.filters.media !== 'any'}
-							<Button
-								variant="ghost"
-								size="sm"
-								onclick={() => {
-									xmpStore.update((store) => ({
-										...store,
-										searchQuery: '',
-										filters: {
-											namespace: 'all',
-											category: 'all',
-											valueForm: 'all',
-											media: 'any',
-										},
-									}));
-								}}
-							>
-								<X class="h-4 w-4 mr-2" />
-								Clear Filters
-							</Button>
-						{/if}
-					</div>
-				</div>
-			</CardHeader>
-			<CardContent>
-				<div class="h-[600px] overflow-auto">
-					<DataTable
-						{columns}
-						data={$filteredProperties}
-					/>
-				</div>
-			</CardContent>
-		</Card>
-
 		<!-- RDF Import Section -->
-		<Card>
+		<Card class="mt-6">
 			<CardHeader>
 				<div class="flex items-center space-x-2">
 					<Import class="h-5 w-5" />
@@ -352,7 +402,7 @@
 						Extract & Add Properties
 					</Button>
 					<p class="text-xs text-muted-foreground">
-						Reference: Adobe XMP Specification
+						Automatically extracts QNames from RDF/XML content
 					</p>
 				</div>
 			</CardContent>

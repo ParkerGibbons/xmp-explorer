@@ -3,6 +3,7 @@
 
 	interface Props {
 		class?: string;
+		style?: string;
 	}
 
 	let { class: className, ...rest }: Props = $props();

@@ -3,29 +3,26 @@
 	import { Button } from '$lib/components/ui';
 	import { Sun, Moon, Monitor } from 'lucide-svelte';
 
-	function cycleTheme() {
-		const current = $themeStore;
+	function toggleTheme() {
+		const current = $effectiveTheme;
 		if (current === 'light') {
 			themeStore.set('dark');
-		} else if (current === 'dark') {
-			themeStore.set('system');
 		} else {
 			themeStore.set('light');
 		}
 	}
 
 	function getIcon() {
-		const current = $themeStore;
+		const current = $effectiveTheme;
 		if (current === 'light') return Sun;
-		if (current === 'dark') return Moon;
-		return Monitor;
+		return Moon;
 	}
 </script>
 
 <Button
 	variant="outline"
 	size="icon"
-	onclick={cycleTheme}
+	onclick={toggleTheme}
 >
 	<svelte:component
 		this={getIcon()}
