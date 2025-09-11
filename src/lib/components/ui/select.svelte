@@ -4,9 +4,15 @@
 	interface Props {
 		class?: string;
 		onValueChange?: (value: string) => void;
+		placeholder?: string;
 	}
 
-	let { class: className, onValueChange, ...rest }: Props = $props();
+	let {
+		class: className,
+		onValueChange,
+		placeholder = 'Select...',
+		...rest
+	}: Props = $props();
 	let isOpen = $state(false);
 	let selectedValue = $state('');
 	let triggerElement: HTMLButtonElement;
@@ -21,8 +27,24 @@
 		onValueChange?.(value);
 	}
 
+	function handleContentClick(event: MouseEvent) {
+		const target = event.target as HTMLElement;
+		const itemEl = target.closest(
+			'[data-select-value]'
+		) as HTMLElement | null;
+		if (itemEl && itemEl.dataset.selectValue) {
+			handleItemClick(itemEl.dataset.selectValue);
+		}
+	}
+
 	function handleKeydown(event: KeyboardEvent) {
 		if (event.key === 'Escape') {
+			isOpen = false;
+		}
+	}
+
+	function handleContentKeydown(event: KeyboardEvent) {
+		if (event.key === 'Escape' || event.key === 'Tab') {
 			isOpen = false;
 		}
 	}
@@ -38,13 +60,17 @@
 		onclick={handleTriggerClick}
 		onkeydown={handleKeydown}
 	>
-		<span>{selectedValue || 'Select...'}</span>
+		<span>{selectedValue || placeholder}</span>
 		<span class="ml-2">{isOpen ? '↑' : '↓'}</span>
 	</button>
 
 	{#if isOpen}
 		<div
 			class="absolute z-50 w-full mt-1 bg-popover text-popover-foreground border rounded-md shadow-md"
+			role="listbox"
+			tabindex="0"
+			onclick={handleContentClick}
+			onkeydown={handleContentKeydown}
 		>
 			<slot />
 		</div>

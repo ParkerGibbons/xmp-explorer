@@ -16,6 +16,7 @@
 		className
 	)}
 	{onclick}
+	data-select-value={value}
 	{...rest}
 >
 	<slot />
