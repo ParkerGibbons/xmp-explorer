@@ -98,6 +98,7 @@
 	}
 
 	function handleRdfExtract() {
+		if (!rdfText.trim()) return;
 		const count = addFromRdf(rdfText);
 		if (count > 0) {
 			rdfText = '';
@@ -343,7 +344,9 @@
 				<div class="flex items-center justify-between">
 					<Button
 						onclick={handleRdfExtract}
-						disabled={!rdfText.trim()}
+						class={!rdfText.trim()
+							? 'opacity-50 cursor-not-allowed'
+							: ''}
 					>
 						<Import class="h-4 w-4 mr-2" />
 						Extract & Add Properties

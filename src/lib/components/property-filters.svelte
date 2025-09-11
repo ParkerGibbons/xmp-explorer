@@ -41,6 +41,14 @@
 	const uniqueNamespaces = $derived(
 		[...new Set($xmpStore.properties.map((p) => p.prefix))].sort()
 	);
+
+	const uniqueCategories = $derived(
+		[...new Set($xmpStore.properties.map((p) => p.category))].sort()
+	);
+
+	const uniqueMediaTypes = $derived(
+		[...new Set($xmpStore.properties.flatMap((p) => p.mediaTags))].sort()
+	);
 </script>
 
 <div class="space-y-6">
@@ -60,7 +68,7 @@
 			<button
 				onclick={() => {
 					searchQuery = '';
-					handleSearch({ target: { value: '' } } as Event);
+					handleSearch({ target: { value: '' } } as unknown as Event);
 				}}
 				class="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
 			>
@@ -131,9 +139,9 @@
 				</SelectTrigger>
 				<SelectContent>
 					<SelectItem value="all">All categories</SelectItem>
-					<SelectItem value="Core">Core</SelectItem>
-					<SelectItem value="Standard">Standard</SelectItem>
-					<SelectItem value="Specialized">Specialized</SelectItem>
+					{#each uniqueCategories as category}
+						<SelectItem value={category}>{category}</SelectItem>
+					{/each}
 				</SelectContent>
 			</Select>
 		</div>
@@ -199,10 +207,9 @@
 				</SelectTrigger>
 				<SelectContent>
 					<SelectItem value="any">Any media</SelectItem>
-					<SelectItem value="video">Video</SelectItem>
-					<SelectItem value="audio">Audio</SelectItem>
-					<SelectItem value="image">Image</SelectItem>
-					<SelectItem value="doc">Document</SelectItem>
+					{#each uniqueMediaTypes as mediaType}
+						<SelectItem value={mediaType}>{mediaType}</SelectItem>
+					{/each}
 				</SelectContent>
 			</Select>
 		</div>

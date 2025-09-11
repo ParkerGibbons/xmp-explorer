@@ -76,12 +76,24 @@
 		category: string
 	): 'default' | 'secondary' | 'destructive' | 'outline' {
 		switch (category) {
-			case 'Core':
+			case 'Dublin Core':
 				return 'default';
-			case 'Standard':
+			case 'Dublin Core Terms':
 				return 'secondary';
-			case 'Specialized':
+			case 'XMP Core':
 				return 'outline';
+			case 'XMP Media Management':
+				return 'destructive';
+			case 'XMP Job Ticket':
+				return 'outline';
+			case 'XMP Paged-Text':
+				return 'secondary';
+			case 'XMP Dynamic Media':
+				return 'destructive';
+			case 'XMP Rights Management':
+				return 'outline';
+			case 'EXIF':
+				return 'secondary';
 			default:
 				return 'secondary';
 		}

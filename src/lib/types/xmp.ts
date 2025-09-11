@@ -2,7 +2,7 @@ export interface XmpProperty {
   qname: string;
   prefix: string;
   namespaceURI: string;
-  category: 'Core' | 'Standard' | 'Specialized';
+  category: 'Dublin Core' | 'Dublin Core Terms' | 'XMP Core' | 'XMP Media Management' | 'XMP Job Ticket' | 'XMP Paged-Text' | 'XMP Dynamic Media' | 'XMP Rights Management' | 'EXIF';
   valueType: string;
   valueForm: 'simple' | 'struct' | 'array-bag' | 'array-seq' | 'array-alt';
   description: string;
