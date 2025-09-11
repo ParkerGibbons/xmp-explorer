@@ -78,7 +78,7 @@
 	</div>
 
 	<!-- Filter Grid -->
-	<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+	<div class="grid grid-cols-1 gap-4">
 		<div class="space-y-2">
 			<div class="flex items-center space-x-2">
 				<Filter class="h-4 w-4 text-muted-foreground" />

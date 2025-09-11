@@ -209,9 +209,11 @@
 	<!-- Main Content -->
 	<div class="container mx-auto p-6">
 		<!-- Desktop: Sidebar + Table Layout | Mobile: Vertical Stack -->
-		<div class="lg:grid lg:grid-cols-12 lg:gap-8 space-y-6 lg:space-y-0">
+		<div
+			class="lg:grid lg:grid-cols-12 lg:gap-6 xl:gap-8 space-y-6 lg:space-y-0"
+		>
 			<!-- Sidebar: Stats + Search (Desktop) | Stacked (Mobile) -->
-			<div class="lg:col-span-4 xl:col-span-3 space-y-6">
+			<div class="lg:col-span-3 xl:col-span-3 2xl:col-span-2 space-y-6">
 				<!-- Stats Cards -->
 				<div class="grid grid-cols-2 lg:grid-cols-1 gap-4">
 					<Card>
@@ -316,7 +318,7 @@
 			</div>
 
 			<!-- Main Table Area -->
-			<div class="lg:col-span-8 xl:col-span-9">
+			<div class="lg:col-span-9 xl:col-span-9 2xl:col-span-10">
 				<Card>
 					<CardHeader>
 						<div class="flex items-center justify-between">
@@ -353,7 +355,10 @@
 						</div>
 					</CardHeader>
 					<CardContent>
-						<div class="h-[600px] lg:h-[700px] overflow-auto">
+						<div
+							class="overflow-auto"
+							style="height: calc(100vh - 400px); min-height: 600px;"
+						>
 							<DataTable
 								{columns}
 								data={$filteredProperties}
