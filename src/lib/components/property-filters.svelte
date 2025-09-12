@@ -78,140 +78,150 @@
 	</div>
 
 	<!-- Filter Grid -->
-	<div class="grid grid-cols-1 gap-4">
-		<div class="space-y-2">
-			<div class="flex items-center space-x-2">
-				<Filter class="h-4 w-4 text-muted-foreground" />
-				<label
-					for="ns-filter"
-					class="text-sm font-medium"
-				>
-					Namespace
-				</label>
-				{#if $xmpStore.filters.namespace !== 'all'}
-					<Badge
-						variant="secondary"
-						class="text-xs"
+	<div class="space-y-6">
+		<!-- First Row: Namespace & Category -->
+		<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+			<div class="space-y-2 relative">
+				<div class="flex items-center space-x-2">
+					<Filter class="h-4 w-4 text-muted-foreground" />
+					<label
+						for="ns-filter"
+						class="text-sm font-medium"
 					>
-						{$xmpStore.filters.namespace}
-					</Badge>
-				{/if}
+						Namespace
+					</label>
+					{#if $xmpStore.filters.namespace !== 'all'}
+						<Badge
+							variant="secondary"
+							class="text-xs"
+						>
+							{$xmpStore.filters.namespace}
+						</Badge>
+					{/if}
+				</div>
+				<Select
+					onValueChange={(value: string) =>
+						handleFilterChange('namespace', value)}
+				>
+					<SelectTrigger>
+						<SelectValue placeholder="All namespaces" />
+					</SelectTrigger>
+					<SelectContent>
+						<SelectItem value="all">All namespaces</SelectItem>
+						{#each uniqueNamespaces as namespace}
+							<SelectItem value={namespace}
+								>{namespace}</SelectItem
+							>
+						{/each}
+					</SelectContent>
+				</Select>
 			</div>
-			<Select
-				onValueChange={(value: string) =>
-					handleFilterChange('namespace', value)}
-			>
-				<SelectTrigger>
-					<SelectValue placeholder="All namespaces" />
-				</SelectTrigger>
-				<SelectContent>
-					<SelectItem value="all">All namespaces</SelectItem>
-					{#each uniqueNamespaces as namespace}
-						<SelectItem value={namespace}>{namespace}</SelectItem>
-					{/each}
-				</SelectContent>
-			</Select>
+
+			<div class="space-y-2 relative">
+				<div class="flex items-center space-x-2">
+					<label
+						for="cat-filter"
+						class="text-sm font-medium"
+					>
+						Category
+					</label>
+					{#if $xmpStore.filters.category !== 'all'}
+						<Badge
+							variant="secondary"
+							class="text-xs"
+						>
+							{$xmpStore.filters.category}
+						</Badge>
+					{/if}
+				</div>
+				<Select
+					onValueChange={(value: string) =>
+						handleFilterChange('category', value)}
+				>
+					<SelectTrigger>
+						<SelectValue placeholder="All categories" />
+					</SelectTrigger>
+					<SelectContent>
+						<SelectItem value="all">All categories</SelectItem>
+						{#each uniqueCategories as category}
+							<SelectItem value={category}>{category}</SelectItem>
+						{/each}
+					</SelectContent>
+				</Select>
+			</div>
 		</div>
 
-		<div class="space-y-2">
-			<div class="flex items-center space-x-2">
-				<label
-					for="cat-filter"
-					class="text-sm font-medium"
-				>
-					Category
-				</label>
-				{#if $xmpStore.filters.category !== 'all'}
-					<Badge
-						variant="secondary"
-						class="text-xs"
+		<!-- Second Row: Value Form & Media Type -->
+		<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+			<div class="space-y-2 relative">
+				<div class="flex items-center space-x-2">
+					<label
+						for="form-filter"
+						class="text-sm font-medium"
 					>
-						{$xmpStore.filters.category}
-					</Badge>
-				{/if}
+						Value Form
+					</label>
+					{#if $xmpStore.filters.valueForm !== 'all'}
+						<Badge
+							variant="secondary"
+							class="text-xs"
+						>
+							{$xmpStore.filters.valueForm}
+						</Badge>
+					{/if}
+				</div>
+				<Select
+					onValueChange={(value: string) =>
+						handleFilterChange('valueForm', value)}
+				>
+					<SelectTrigger>
+						<SelectValue placeholder="All value forms" />
+					</SelectTrigger>
+					<SelectContent>
+						<SelectItem value="all">All value forms</SelectItem>
+						<SelectItem value="simple">simple</SelectItem>
+						<SelectItem value="struct">struct</SelectItem>
+						<SelectItem value="array-bag">array-bag</SelectItem>
+						<SelectItem value="array-seq">array-seq</SelectItem>
+						<SelectItem value="array-alt">array-alt</SelectItem>
+					</SelectContent>
+				</Select>
 			</div>
-			<Select
-				onValueChange={(value: string) =>
-					handleFilterChange('category', value)}
-			>
-				<SelectTrigger>
-					<SelectValue placeholder="All categories" />
-				</SelectTrigger>
-				<SelectContent>
-					<SelectItem value="all">All categories</SelectItem>
-					{#each uniqueCategories as category}
-						<SelectItem value={category}>{category}</SelectItem>
-					{/each}
-				</SelectContent>
-			</Select>
-		</div>
 
-		<div class="space-y-2">
-			<div class="flex items-center space-x-2">
-				<label
-					for="form-filter"
-					class="text-sm font-medium"
-				>
-					Value Form
-				</label>
-				{#if $xmpStore.filters.valueForm !== 'all'}
-					<Badge
-						variant="secondary"
-						class="text-xs"
+			<div class="space-y-2 relative">
+				<div class="flex items-center space-x-2">
+					<label
+						for="media-filter"
+						class="text-sm font-medium"
 					>
-						{$xmpStore.filters.valueForm}
-					</Badge>
-				{/if}
-			</div>
-			<Select
-				onValueChange={(value: string) =>
-					handleFilterChange('valueForm', value)}
-			>
-				<SelectTrigger>
-					<SelectValue placeholder="All value forms" />
-				</SelectTrigger>
-				<SelectContent>
-					<SelectItem value="all">All value forms</SelectItem>
-					<SelectItem value="simple">simple</SelectItem>
-					<SelectItem value="struct">struct</SelectItem>
-					<SelectItem value="array-bag">array-bag</SelectItem>
-					<SelectItem value="array-seq">array-seq</SelectItem>
-					<SelectItem value="array-alt">array-alt</SelectItem>
-				</SelectContent>
-			</Select>
-		</div>
-
-		<div class="space-y-2">
-			<div class="flex items-center space-x-2">
-				<label
-					for="media-filter"
-					class="text-sm font-medium"
+						Media Type
+					</label>
+					{#if $xmpStore.filters.media !== 'any'}
+						<Badge
+							variant="secondary"
+							class="text-xs"
+						>
+							{$xmpStore.filters.media}
+						</Badge>
+					{/if}
+				</div>
+				<Select
+					onValueChange={(value: string) =>
+						handleFilterChange('media', value)}
 				>
-					Media Type
-				</label>
-				{#if $xmpStore.filters.media !== 'any'}
-					<Badge
-						variant="secondary"
-						class="text-xs"
-					>
-						{$xmpStore.filters.media}
-					</Badge>
-				{/if}
+					<SelectTrigger>
+						<SelectValue placeholder="Any media" />
+					</SelectTrigger>
+					<SelectContent>
+						<SelectItem value="any">Any media</SelectItem>
+						{#each uniqueMediaTypes as mediaType}
+							<SelectItem value={mediaType}
+								>{mediaType}</SelectItem
+							>
+						{/each}
+					</SelectContent>
+				</Select>
 			</div>
-			<Select
-				onValueChange={(value: string) =>
-					handleFilterChange('media', value)}
-			>
-				<SelectTrigger>
-					<SelectValue placeholder="Any media" />
-				</SelectTrigger>
-				<SelectContent>
-					<SelectItem value="any">Any media</SelectItem>
-					{#each uniqueMediaTypes as mediaType}
-						<SelectItem value={mediaType}>{mediaType}</SelectItem>
-					{/each}
-				</SelectContent>
-			</Select>
 		</div>
 	</div>
 </div>

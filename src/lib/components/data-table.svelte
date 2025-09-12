@@ -210,7 +210,8 @@
 									</div>
 								{:else if column.key === 'description'}
 									<div
-										class="text-muted-foreground leading-snug whitespace-pre-wrap break-words text-xs"
+										class="text-muted-foreground leading-snug text-xs max-w-[300px] break-words"
+										style="word-wrap: break-word; hyphens: auto;"
 									>
 										{property.description}
 									</div>
