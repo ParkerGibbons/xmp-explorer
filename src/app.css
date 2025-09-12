@@ -4,50 +4,58 @@
 
 @layer base {
   :root {
-    /* Flexoki-inspired Light Theme - Warm Paper Tones */
-    --background: 32 57% 95%;          /* #FFFCF0 - Warm paper white */
-    --foreground: 25 25% 15%;          /* #282020 - Inky black text */
-    --card: 30 54% 98%;                /* #FFFEF9 - Slightly warmer card */
-    --card-foreground: 25 25% 15%;     /* #282020 - Dark text on cards */
-    --popover: 30 54% 98%;             /* #FFFEF9 - Warm popover */
-    --popover-foreground: 25 25% 15%;  /* #282020 - Dark popover text */
-    --primary: 27 89% 37%;             /* #DA702C - Flexoki orange-400 */
-    --primary-foreground: 30 54% 98%;  /* #FFFEF9 - Light text on orange */
-    --secondary: 32 43% 88%;           /* #F2F0E5 - Warm neutral */
-    --secondary-foreground: 25 25% 20%; /* #383030 - Darker text */
-    --muted: 32 43% 90%;               /* #F7F5EB - Subtle muted bg */
-    --muted-foreground: 25 15% 45%;    /* #6F6E69 - Medium gray text */
-    --accent: 180 25% 55%;             /* #87A3A3 - Flexoki cyan-300 muted */
-    --accent-foreground: 25 25% 15%;   /* #282020 - Dark on accent */
-    --destructive: 9 75% 55%;          /* #D14D41 - Flexoki red-500 */
-    --destructive-foreground: 30 54% 98%; /* #FFFEF9 - Light on red */
-    --border: 32 30% 85%;              /* #E6E4D9 - Warm border */
-    --input: 32 30% 88%;               /* #EDEBD9 - Input background */
-    --ring: 27 89% 37%;                /* #DA702C - Orange focus ring */
-    --radius: 0.375rem;                /* Slightly smaller radius for retro feel */
+    --background: 19 40% 99%;
+    --foreground: 19 63% 1%;
+    --muted: 199 37% 95%;
+    --muted-foreground: 199 10% 27%;
+    --popover: 19 40% 99%;
+    --popover-foreground: 19 63% 1%;
+    --card: 19 40% 99%;
+    --card-foreground: 19 63% 1%;
+    --border: 19 2% 91%;
+    --input: 19 2% 91%;
+    --primary: 19 87% 45%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 199 87% 45%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 199 87% 45%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 15 93% 31%;
+    --destructive-foreground: 15 93% 91%;
+    --ring: 19 87% 45%;
+    --chart-1: 19 87% 45%;
+    --chart-2: 199 87% 45%;
+    --chart-3: 199 87% 45%;
+    --chart-4: 199 87% 48%;
+    --chart-5: 19 90% 45%;
+    --radius: 0rem;
   }
 
   .dark {
-    /* Flexoki-inspired Dark Theme - Inky Night Tones */
-    --background: 25 25% 8%;           /* #141212 - Deep inky background */
-    --foreground: 32 57% 95%;          /* #FFFCF0 - Warm paper text */
-    --card: 25 25% 10%;                /* #1C1B1A - Slightly lighter cards */
-    --card-foreground: 32 57% 95%;     /* #FFFCF0 - Light card text */
-    --popover: 25 25% 10%;             /* #1C1B1A - Dark popover */
-    --popover-foreground: 32 57% 95%;  /* #FFFCF0 - Light popover text */
-    --primary: 27 89% 50%;             /* #EC8B49 - Brighter orange in dark */
-    --primary-foreground: 25 25% 8%;   /* #141212 - Dark text on orange */
-    --secondary: 25 20% 18%;           /* #343331 - Warm dark secondary */
-    --secondary-foreground: 32 43% 88%; /* #F2F0E5 - Light secondary text */
-    --muted: 25 20% 15%;               /* #2A2928 - Muted dark background */
-    --muted-foreground: 32 15% 65%;    /* #B7B5AC - Light muted text */
-    --accent: 180 30% 45%;             /* #5ABDAC - Flexoki cyan-400 */
-    --accent-foreground: 25 25% 8%;    /* #141212 - Dark on cyan */
-    --destructive: 9 85% 45%;          /* #AF3029 - Flexoki red-600 */
-    --destructive-foreground: 32 57% 95%; /* #FFFCF0 - Light on red */
-    --border: 25 20% 20%;              /* #3A3937 - Dark warm border */
-    --input: 25 20% 18%;               /* #343331 - Input background */
-    --ring: 27 89% 50%;                /* #EC8B49 - Orange focus ring */
+    --background: 212 16% 15%;
+    --foreground: 60 36% 96%;
+    --muted: 212 12% 19%;
+    --muted-foreground: 212 12% 69%;
+    --popover: 212 16% 12%;
+    --popover-foreground: 0 0% 100%;
+    --card: 212 16% 13%;
+    --card-foreground: 0 0% 100%;
+    --border: 212 6% 20%;
+    --input: 212 6% 23%;
+    --primary: 6 78% 57%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 213.33 9.41% 26.01%;
+    --secondary-foreground: 6 0% 100%;
+    --accent: 212 16% 30%;
+    --accent-foreground: 212 16% 90%;
+    --destructive: 6 80% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 6 78% 57%;
+    --chart-1: 6 78% 57%;
+    --chart-2: 6 30% 75%;
+    --chart-3: 212 16% 30%;
+    --chart-4: 6 30% 78%;
+    --chart-5: 6 81% 57%;
   }
 }
 
