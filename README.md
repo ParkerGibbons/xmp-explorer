@@ -44,7 +44,7 @@ A modern web application for exploring and managing XMP (Extensible Metadata Pla
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 22.12+ (22.x)
 - pnpm (recommended) or npm
 
 ### Installation
