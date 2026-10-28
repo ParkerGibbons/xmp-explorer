@@ -3,6 +3,9 @@
 	"private": true,
 	"version": "0.0.1",
 	"type": "module",
+	"engines": {
+		"node": "22.x"
+	},
 	"scripts": {
 		"dev": "vite dev --host --open",
 		"dev:debug": "vite dev --host --open --debug",
@@ -16,7 +19,7 @@
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^6.0.0",
 		"@sveltejs/adapter-vercel": "^5.10.2",
-		"@sveltejs/kit": "^2.22.0",
+		"@sveltejs/kit": "^2.70.2",
 		"@sveltejs/vite-plugin-svelte": "^6.0.0",
 		"@sveltejs/vite-plugin-svelte-inspector": "^5.0.1",
 		"autoprefixer": "^10.4.21",
